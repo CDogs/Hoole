@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.CDogs.Hoole.mapper.HooleAccountTMapper" >
+  <resultMap id="BaseResultMap" type="com.CDogs.Hoole.pojo.HooleAccountT" >
+    <id column="person_ID" property="personId" jdbcType="INTEGER" />
+    <result column="person_email" property="personEmail" jdbcType="VARCHAR" />
+    <result column="person_phone" property="personPhone" jdbcType="VARCHAR" />
+    <result column="person_state" property="personState" jdbcType="VARCHAR" />
+    <result column="person_create_time" property="personCreateTime" jdbcType="TIMESTAMP" />
+    <result column="person_last_time" property="personLastTime" jdbcType="TIMESTAMP" />
+    <result column="person_school" property="personSchool" jdbcType="VARCHAR" />
+    <result column="person_address" property="personAddress" jdbcType="VARCHAR" />
+    <result column="person_sex" property="personSex" jdbcType="VARCHAR" />
+    <result column="person_birthdate" property="personBirthdate" jdbcType="TIMESTAMP" />
+    <result column="person_constellation" property="personConstellation" jdbcType="VARCHAR" />
+    <result column="person_signature" property="personSignature" jdbcType="VARCHAR" />
+    <result column="person_age" property="personAge" jdbcType="SMALLINT" />
+    <result column="person_company" property="personCompany" jdbcType="VARCHAR" />
+    <result column="person_grade" property="personGrade" jdbcType="INTEGER" />
+    <result column="person_integration" property="personIntegration" jdbcType="INTEGER" />
+    <result column="person_postcode" property="personPostcode" jdbcType="VARCHAR" />
+    <result column="person_nickname" property="personNickname" jdbcType="VARCHAR" />
+    <result column="person_portrait" property="personPortrait" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    person_ID, person_email, person_phone, person_state, person_create_time, person_last_time, 
+    person_school, person_address, person_sex, person_birthdate, person_constellation, 
+    person_signature, person_age, person_company, person_grade, person_integration, person_postcode, 
+    person_nickname, person_portrait
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.CDogs.Hoole.pojo.HooleAccountTExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hoole_account_t
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hoole_account_t
+    where person_ID = #{personId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hoole_account_t
+    where person_ID = #{personId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.CDogs.Hoole.pojo.HooleAccountTExample" >
+    delete from hoole_account_t
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.CDogs.Hoole.pojo.HooleAccountT" >
+    insert into hoole_account_t (person_ID, person_email, person_phone, 
+      person_state, person_create_time, person_last_time, 
+      person_school, person_address, person_sex, 
+      person_birthdate, person_constellation, 
+      person_signature, person_age, person_company, 
+      person_grade, person_integration, person_postcode, 
+      person_nickname, person_portrait)
+    values (#{personId,jdbcType=INTEGER}, #{personEmail,jdbcType=VARCHAR}, #{personPhone,jdbcType=VARCHAR}, 
+      #{personState,jdbcType=VARCHAR}, #{personCreateTime,jdbcType=TIMESTAMP}, #{personLastTime,jdbcType=TIMESTAMP}, 
+      #{personSchool,jdbcType=VARCHAR}, #{personAddress,jdbcType=VARCHAR}, #{personSex,jdbcType=VARCHAR}, 
+      #{personBirthdate,jdbcType=TIMESTAMP}, #{personConstellation,jdbcType=VARCHAR}, 
+      #{personSignature,jdbcType=VARCHAR}, #{personAge,jdbcType=SMALLINT}, #{personCompany,jdbcType=VARCHAR}, 
+      #{personGrade,jdbcType=INTEGER}, #{personIntegration,jdbcType=INTEGER}, #{personPostcode,jdbcType=VARCHAR}, 
+      #{personNickname,jdbcType=VARCHAR}, #{personPortrait,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.CDogs.Hoole.pojo.HooleAccountT" >
+    insert into hoole_account_t
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="personId != null" >
+        person_ID,
+      </if>
+      <if test="personEmail != null" >
+        person_email,
+      </if>
+      <if test="personPhone != null" >
+        person_phone,
+      </if>
+      <if test="personState != null" >
+        person_state,
+      </if>
+      <if test="personCreateTime != null" >
+        person_create_time,
+      </if>
+      <if test="personLastTime != null" >
+        person_last_time,
+      </if>
+      <if test="personSchool != null" >
+        person_school,
+      </if>
+      <if test="personAddress != null" >
+        person_address,
+      </if>
+      <if test="personSex != null" >
+        person_sex,
+      </if>
+      <if test="personBirthdate != null" >
+        person_birthdate,
+      </if>
+      <if test="personConstellation != null" >
+        person_constellation,
+      </if>
+      <if test="personSignature != null" >
+        person_signature,
+      </if>
+      <if test="personAge != null" >
+        person_age,
+      </if>
+      <if test="personCompany != null" >
+        person_company,
+      </if>
+      <if test="personGrade != null" >
+        person_grade,
+      </if>
+      <if test="personIntegration != null" >
+        person_integration,
+      </if>
+      <if test="personPostcode != null" >
+        person_postcode,
+      </if>
+      <if test="personNickname != null" >
+        person_nickname,
+      </if>
+      <if test="personPortrait != null" >
+        person_portrait,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="personId != null" >
+        #{personId,jdbcType=INTEGER},
+      </if>
+      <if test="personEmail != null" >
+        #{personEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="personPhone != null" >
+        #{personPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="personState != null" >
+        #{personState,jdbcType=VARCHAR},
+      </if>
+      <if test="personCreateTime != null" >
+        #{personCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personLastTime != null" >
+        #{personLastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personSchool != null" >
+        #{personSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="personAddress != null" >
+        #{personAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="personSex != null" >
+        #{personSex,jdbcType=VARCHAR},
+      </if>
+      <if test="personBirthdate != null" >
+        #{personBirthdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personConstellation != null" >
+        #{personConstellation,jdbcType=VARCHAR},
+      </if>
+      <if test="personSignature != null" >
+        #{personSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="personAge != null" >
+        #{personAge,jdbcType=SMALLINT},
+      </if>
+      <if test="personCompany != null" >
+        #{personCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="personGrade != null" >
+        #{personGrade,jdbcType=INTEGER},
+      </if>
+      <if test="personIntegration != null" >
+        #{personIntegration,jdbcType=INTEGER},
+      </if>
+      <if test="personPostcode != null" >
+        #{personPostcode,jdbcType=VARCHAR},
+      </if>
+      <if test="personNickname != null" >
+        #{personNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="personPortrait != null" >
+        #{personPortrait,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.CDogs.Hoole.pojo.HooleAccountTExample" resultType="java.lang.Integer" >
+    select count(*) from hoole_account_t
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hoole_account_t
+    <set >
+      <if test="record.personId != null" >
+        person_ID = #{record.personId,jdbcType=INTEGER},
+      </if>
+      <if test="record.personEmail != null" >
+        person_email = #{record.personEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personPhone != null" >
+        person_phone = #{record.personPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personState != null" >
+        person_state = #{record.personState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personCreateTime != null" >
+        person_create_time = #{record.personCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.personLastTime != null" >
+        person_last_time = #{record.personLastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.personSchool != null" >
+        person_school = #{record.personSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personAddress != null" >
+        person_address = #{record.personAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personSex != null" >
+        person_sex = #{record.personSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personBirthdate != null" >
+        person_birthdate = #{record.personBirthdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.personConstellation != null" >
+        person_constellation = #{record.personConstellation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personSignature != null" >
+        person_signature = #{record.personSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personAge != null" >
+        person_age = #{record.personAge,jdbcType=SMALLINT},
+      </if>
+      <if test="record.personCompany != null" >
+        person_company = #{record.personCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personGrade != null" >
+        person_grade = #{record.personGrade,jdbcType=INTEGER},
+      </if>
+      <if test="record.personIntegration != null" >
+        person_integration = #{record.personIntegration,jdbcType=INTEGER},
+      </if>
+      <if test="record.personPostcode != null" >
+        person_postcode = #{record.personPostcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personNickname != null" >
+        person_nickname = #{record.personNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personPortrait != null" >
+        person_portrait = #{record.personPortrait,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hoole_account_t
+    set person_ID = #{record.personId,jdbcType=INTEGER},
+      person_email = #{record.personEmail,jdbcType=VARCHAR},
+      person_phone = #{record.personPhone,jdbcType=VARCHAR},
+      person_state = #{record.personState,jdbcType=VARCHAR},
+      person_create_time = #{record.personCreateTime,jdbcType=TIMESTAMP},
+      person_last_time = #{record.personLastTime,jdbcType=TIMESTAMP},
+      person_school = #{record.personSchool,jdbcType=VARCHAR},
+      person_address = #{record.personAddress,jdbcType=VARCHAR},
+      person_sex = #{record.personSex,jdbcType=VARCHAR},
+      person_birthdate = #{record.personBirthdate,jdbcType=TIMESTAMP},
+      person_constellation = #{record.personConstellation,jdbcType=VARCHAR},
+      person_signature = #{record.personSignature,jdbcType=VARCHAR},
+      person_age = #{record.personAge,jdbcType=SMALLINT},
+      person_company = #{record.personCompany,jdbcType=VARCHAR},
+      person_grade = #{record.personGrade,jdbcType=INTEGER},
+      person_integration = #{record.personIntegration,jdbcType=INTEGER},
+      person_postcode = #{record.personPostcode,jdbcType=VARCHAR},
+      person_nickname = #{record.personNickname,jdbcType=VARCHAR},
+      person_portrait = #{record.personPortrait,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.CDogs.Hoole.pojo.HooleAccountT" >
+    update hoole_account_t
+    <set >
+      <if test="personEmail != null" >
+        person_email = #{personEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="personPhone != null" >
+        person_phone = #{personPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="personState != null" >
+        person_state = #{personState,jdbcType=VARCHAR},
+      </if>
+      <if test="personCreateTime != null" >
+        person_create_time = #{personCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personLastTime != null" >
+        person_last_time = #{personLastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personSchool != null" >
+        person_school = #{personSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="personAddress != null" >
+        person_address = #{personAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="personSex != null" >
+        person_sex = #{personSex,jdbcType=VARCHAR},
+      </if>
+      <if test="personBirthdate != null" >
+        person_birthdate = #{personBirthdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personConstellation != null" >
+        person_constellation = #{personConstellation,jdbcType=VARCHAR},
+      </if>
+      <if test="personSignature != null" >
+        person_signature = #{personSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="personAge != null" >
+        person_age = #{personAge,jdbcType=SMALLINT},
+      </if>
+      <if test="personCompany != null" >
+        person_company = #{personCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="personGrade != null" >
+        person_grade = #{personGrade,jdbcType=INTEGER},
+      </if>
+      <if test="personIntegration != null" >
+        person_integration = #{personIntegration,jdbcType=INTEGER},
+      </if>
+      <if test="personPostcode != null" >
+        person_postcode = #{personPostcode,jdbcType=VARCHAR},
+      </if>
+      <if test="personNickname != null" >
+        person_nickname = #{personNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="personPortrait != null" >
+        person_portrait = #{personPortrait,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where person_ID = #{personId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.CDogs.Hoole.pojo.HooleAccountT" >
+    update hoole_account_t
+    set person_email = #{personEmail,jdbcType=VARCHAR},
+      person_phone = #{personPhone,jdbcType=VARCHAR},
+      person_state = #{personState,jdbcType=VARCHAR},
+      person_create_time = #{personCreateTime,jdbcType=TIMESTAMP},
+      person_last_time = #{personLastTime,jdbcType=TIMESTAMP},
+      person_school = #{personSchool,jdbcType=VARCHAR},
+      person_address = #{personAddress,jdbcType=VARCHAR},
+      person_sex = #{personSex,jdbcType=VARCHAR},
+      person_birthdate = #{personBirthdate,jdbcType=TIMESTAMP},
+      person_constellation = #{personConstellation,jdbcType=VARCHAR},
+      person_signature = #{personSignature,jdbcType=VARCHAR},
+      person_age = #{personAge,jdbcType=SMALLINT},
+      person_company = #{personCompany,jdbcType=VARCHAR},
+      person_grade = #{personGrade,jdbcType=INTEGER},
+      person_integration = #{personIntegration,jdbcType=INTEGER},
+      person_postcode = #{personPostcode,jdbcType=VARCHAR},
+      person_nickname = #{personNickname,jdbcType=VARCHAR},
+      person_portrait = #{personPortrait,jdbcType=VARCHAR}
+    where person_ID = #{personId,jdbcType=INTEGER}
+  </update>
+</mapper>
