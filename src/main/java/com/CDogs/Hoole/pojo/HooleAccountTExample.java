@@ -705,63 +705,63 @@ public class HooleAccountTExample {
             return (Criteria) this;
         }
 
-        public Criteria andPersonBirthdateIsNull() {
-            addCriterion("person_birthdate is null");
+        public Criteria andPersonBirthdayIsNull() {
+            addCriterion("person_birthday is null");
             return (Criteria) this;
         }
 
-        public Criteria andPersonBirthdateIsNotNull() {
-            addCriterion("person_birthdate is not null");
+        public Criteria andPersonBirthdayIsNotNull() {
+            addCriterion("person_birthday is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPersonBirthdateEqualTo(Date value) {
-            addCriterion("person_birthdate =", value, "personBirthdate");
+        public Criteria andPersonBirthdayEqualTo(Date value) {
+            addCriterion("person_birthday =", value, "personBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andPersonBirthdateNotEqualTo(Date value) {
-            addCriterion("person_birthdate <>", value, "personBirthdate");
+        public Criteria andPersonBirthdayNotEqualTo(Date value) {
+            addCriterion("person_birthday <>", value, "personBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andPersonBirthdateGreaterThan(Date value) {
-            addCriterion("person_birthdate >", value, "personBirthdate");
+        public Criteria andPersonBirthdayGreaterThan(Date value) {
+            addCriterion("person_birthday >", value, "personBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andPersonBirthdateGreaterThanOrEqualTo(Date value) {
-            addCriterion("person_birthdate >=", value, "personBirthdate");
+        public Criteria andPersonBirthdayGreaterThanOrEqualTo(Date value) {
+            addCriterion("person_birthday >=", value, "personBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andPersonBirthdateLessThan(Date value) {
-            addCriterion("person_birthdate <", value, "personBirthdate");
+        public Criteria andPersonBirthdayLessThan(Date value) {
+            addCriterion("person_birthday <", value, "personBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andPersonBirthdateLessThanOrEqualTo(Date value) {
-            addCriterion("person_birthdate <=", value, "personBirthdate");
+        public Criteria andPersonBirthdayLessThanOrEqualTo(Date value) {
+            addCriterion("person_birthday <=", value, "personBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andPersonBirthdateIn(List<Date> values) {
-            addCriterion("person_birthdate in", values, "personBirthdate");
+        public Criteria andPersonBirthdayIn(List<Date> values) {
+            addCriterion("person_birthday in", values, "personBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andPersonBirthdateNotIn(List<Date> values) {
-            addCriterion("person_birthdate not in", values, "personBirthdate");
+        public Criteria andPersonBirthdayNotIn(List<Date> values) {
+            addCriterion("person_birthday not in", values, "personBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andPersonBirthdateBetween(Date value1, Date value2) {
-            addCriterion("person_birthdate between", value1, value2, "personBirthdate");
+        public Criteria andPersonBirthdayBetween(Date value1, Date value2) {
+            addCriterion("person_birthday between", value1, value2, "personBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andPersonBirthdateNotBetween(Date value1, Date value2) {
-            addCriterion("person_birthdate not between", value1, value2, "personBirthdate");
+        public Criteria andPersonBirthdayNotBetween(Date value1, Date value2) {
+            addCriterion("person_birthday not between", value1, value2, "personBirthday");
             return (Criteria) this;
         }
 
@@ -1362,6 +1362,146 @@ public class HooleAccountTExample {
 
         public Criteria andPersonPortraitNotBetween(String value1, String value2) {
             addCriterion("person_portrait not between", value1, value2, "personPortrait");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordIsNull() {
+            addCriterion("person_password is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordIsNotNull() {
+            addCriterion("person_password is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordEqualTo(String value) {
+            addCriterion("person_password =", value, "personPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordNotEqualTo(String value) {
+            addCriterion("person_password <>", value, "personPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordGreaterThan(String value) {
+            addCriterion("person_password >", value, "personPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordGreaterThanOrEqualTo(String value) {
+            addCriterion("person_password >=", value, "personPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordLessThan(String value) {
+            addCriterion("person_password <", value, "personPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordLessThanOrEqualTo(String value) {
+            addCriterion("person_password <=", value, "personPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordLike(String value) {
+            addCriterion("person_password like", value, "personPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordNotLike(String value) {
+            addCriterion("person_password not like", value, "personPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordIn(List<String> values) {
+            addCriterion("person_password in", values, "personPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordNotIn(List<String> values) {
+            addCriterion("person_password not in", values, "personPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordBetween(String value1, String value2) {
+            addCriterion("person_password between", value1, value2, "personPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonPasswordNotBetween(String value1, String value2) {
+            addCriterion("person_password not between", value1, value2, "personPassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumIsNull() {
+            addCriterion("person_account_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumIsNotNull() {
+            addCriterion("person_account_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumEqualTo(String value) {
+            addCriterion("person_account_num =", value, "personAccountNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumNotEqualTo(String value) {
+            addCriterion("person_account_num <>", value, "personAccountNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumGreaterThan(String value) {
+            addCriterion("person_account_num >", value, "personAccountNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumGreaterThanOrEqualTo(String value) {
+            addCriterion("person_account_num >=", value, "personAccountNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumLessThan(String value) {
+            addCriterion("person_account_num <", value, "personAccountNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumLessThanOrEqualTo(String value) {
+            addCriterion("person_account_num <=", value, "personAccountNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumLike(String value) {
+            addCriterion("person_account_num like", value, "personAccountNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumNotLike(String value) {
+            addCriterion("person_account_num not like", value, "personAccountNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumIn(List<String> values) {
+            addCriterion("person_account_num in", values, "personAccountNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumNotIn(List<String> values) {
+            addCriterion("person_account_num not in", values, "personAccountNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumBetween(String value1, String value2) {
+            addCriterion("person_account_num between", value1, value2, "personAccountNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonAccountNumNotBetween(String value1, String value2) {
+            addCriterion("person_account_num not between", value1, value2, "personAccountNum");
             return (Criteria) this;
         }
     }

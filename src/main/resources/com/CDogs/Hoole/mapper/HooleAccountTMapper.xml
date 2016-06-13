@@ -11,7 +11,7 @@
     <result column="person_school" property="personSchool" jdbcType="VARCHAR" />
     <result column="person_address" property="personAddress" jdbcType="VARCHAR" />
     <result column="person_sex" property="personSex" jdbcType="VARCHAR" />
-    <result column="person_birthdate" property="personBirthdate" jdbcType="TIMESTAMP" />
+    <result column="person_birthday" property="personBirthday" jdbcType="TIMESTAMP" />
     <result column="person_constellation" property="personConstellation" jdbcType="VARCHAR" />
     <result column="person_signature" property="personSignature" jdbcType="VARCHAR" />
     <result column="person_age" property="personAge" jdbcType="SMALLINT" />
@@ -21,6 +21,8 @@
     <result column="person_postcode" property="personPostcode" jdbcType="VARCHAR" />
     <result column="person_nickname" property="personNickname" jdbcType="VARCHAR" />
     <result column="person_portrait" property="personPortrait" jdbcType="VARCHAR" />
+    <result column="person_password" property="personPassword" jdbcType="VARCHAR" />
+    <result column="person_account_num" property="personAccountNum" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -82,9 +84,9 @@
   </sql>
   <sql id="Base_Column_List" >
     person_ID, person_email, person_phone, person_state, person_create_time, person_last_time, 
-    person_school, person_address, person_sex, person_birthdate, person_constellation, 
+    person_school, person_address, person_sex, person_birthday, person_constellation, 
     person_signature, person_age, person_company, person_grade, person_integration, person_postcode, 
-    person_nickname, person_portrait
+    person_nickname, person_portrait, person_password, person_account_num
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.CDogs.Hoole.pojo.HooleAccountTExample" >
     select
@@ -120,17 +122,19 @@
     insert into hoole_account_t (person_ID, person_email, person_phone, 
       person_state, person_create_time, person_last_time, 
       person_school, person_address, person_sex, 
-      person_birthdate, person_constellation, 
+      person_birthday, person_constellation, 
       person_signature, person_age, person_company, 
       person_grade, person_integration, person_postcode, 
-      person_nickname, person_portrait)
+      person_nickname, person_portrait, person_password, 
+      person_account_num)
     values (#{personId,jdbcType=INTEGER}, #{personEmail,jdbcType=VARCHAR}, #{personPhone,jdbcType=VARCHAR}, 
       #{personState,jdbcType=VARCHAR}, #{personCreateTime,jdbcType=TIMESTAMP}, #{personLastTime,jdbcType=TIMESTAMP}, 
       #{personSchool,jdbcType=VARCHAR}, #{personAddress,jdbcType=VARCHAR}, #{personSex,jdbcType=VARCHAR}, 
-      #{personBirthdate,jdbcType=TIMESTAMP}, #{personConstellation,jdbcType=VARCHAR}, 
+      #{personBirthday,jdbcType=TIMESTAMP}, #{personConstellation,jdbcType=VARCHAR}, 
       #{personSignature,jdbcType=VARCHAR}, #{personAge,jdbcType=SMALLINT}, #{personCompany,jdbcType=VARCHAR}, 
       #{personGrade,jdbcType=INTEGER}, #{personIntegration,jdbcType=INTEGER}, #{personPostcode,jdbcType=VARCHAR}, 
-      #{personNickname,jdbcType=VARCHAR}, #{personPortrait,jdbcType=VARCHAR})
+      #{personNickname,jdbcType=VARCHAR}, #{personPortrait,jdbcType=VARCHAR}, #{personPassword,jdbcType=VARCHAR}, 
+      #{personAccountNum,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.CDogs.Hoole.pojo.HooleAccountT" >
     insert into hoole_account_t
@@ -162,8 +166,8 @@
       <if test="personSex != null" >
         person_sex,
       </if>
-      <if test="personBirthdate != null" >
-        person_birthdate,
+      <if test="personBirthday != null" >
+        person_birthday,
       </if>
       <if test="personConstellation != null" >
         person_constellation,
@@ -191,6 +195,12 @@
       </if>
       <if test="personPortrait != null" >
         person_portrait,
+      </if>
+      <if test="personPassword != null" >
+        person_password,
+      </if>
+      <if test="personAccountNum != null" >
+        person_account_num,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -221,8 +231,8 @@
       <if test="personSex != null" >
         #{personSex,jdbcType=VARCHAR},
       </if>
-      <if test="personBirthdate != null" >
-        #{personBirthdate,jdbcType=TIMESTAMP},
+      <if test="personBirthday != null" >
+        #{personBirthday,jdbcType=TIMESTAMP},
       </if>
       <if test="personConstellation != null" >
         #{personConstellation,jdbcType=VARCHAR},
@@ -250,6 +260,12 @@
       </if>
       <if test="personPortrait != null" >
         #{personPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="personPassword != null" >
+        #{personPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="personAccountNum != null" >
+        #{personAccountNum,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -289,8 +305,8 @@
       <if test="record.personSex != null" >
         person_sex = #{record.personSex,jdbcType=VARCHAR},
       </if>
-      <if test="record.personBirthdate != null" >
-        person_birthdate = #{record.personBirthdate,jdbcType=TIMESTAMP},
+      <if test="record.personBirthday != null" >
+        person_birthday = #{record.personBirthday,jdbcType=TIMESTAMP},
       </if>
       <if test="record.personConstellation != null" >
         person_constellation = #{record.personConstellation,jdbcType=VARCHAR},
@@ -319,6 +335,12 @@
       <if test="record.personPortrait != null" >
         person_portrait = #{record.personPortrait,jdbcType=VARCHAR},
       </if>
+      <if test="record.personPassword != null" >
+        person_password = #{record.personPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personAccountNum != null" >
+        person_account_num = #{record.personAccountNum,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -335,7 +357,7 @@
       person_school = #{record.personSchool,jdbcType=VARCHAR},
       person_address = #{record.personAddress,jdbcType=VARCHAR},
       person_sex = #{record.personSex,jdbcType=VARCHAR},
-      person_birthdate = #{record.personBirthdate,jdbcType=TIMESTAMP},
+      person_birthday = #{record.personBirthday,jdbcType=TIMESTAMP},
       person_constellation = #{record.personConstellation,jdbcType=VARCHAR},
       person_signature = #{record.personSignature,jdbcType=VARCHAR},
       person_age = #{record.personAge,jdbcType=SMALLINT},
@@ -344,7 +366,9 @@
       person_integration = #{record.personIntegration,jdbcType=INTEGER},
       person_postcode = #{record.personPostcode,jdbcType=VARCHAR},
       person_nickname = #{record.personNickname,jdbcType=VARCHAR},
-      person_portrait = #{record.personPortrait,jdbcType=VARCHAR}
+      person_portrait = #{record.personPortrait,jdbcType=VARCHAR},
+      person_password = #{record.personPassword,jdbcType=VARCHAR},
+      person_account_num = #{record.personAccountNum,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -376,8 +400,8 @@
       <if test="personSex != null" >
         person_sex = #{personSex,jdbcType=VARCHAR},
       </if>
-      <if test="personBirthdate != null" >
-        person_birthdate = #{personBirthdate,jdbcType=TIMESTAMP},
+      <if test="personBirthday != null" >
+        person_birthday = #{personBirthday,jdbcType=TIMESTAMP},
       </if>
       <if test="personConstellation != null" >
         person_constellation = #{personConstellation,jdbcType=VARCHAR},
@@ -406,6 +430,12 @@
       <if test="personPortrait != null" >
         person_portrait = #{personPortrait,jdbcType=VARCHAR},
       </if>
+      <if test="personPassword != null" >
+        person_password = #{personPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="personAccountNum != null" >
+        person_account_num = #{personAccountNum,jdbcType=VARCHAR},
+      </if>
     </set>
     where person_ID = #{personId,jdbcType=INTEGER}
   </update>
@@ -419,7 +449,7 @@
       person_school = #{personSchool,jdbcType=VARCHAR},
       person_address = #{personAddress,jdbcType=VARCHAR},
       person_sex = #{personSex,jdbcType=VARCHAR},
-      person_birthdate = #{personBirthdate,jdbcType=TIMESTAMP},
+      person_birthday = #{personBirthday,jdbcType=TIMESTAMP},
       person_constellation = #{personConstellation,jdbcType=VARCHAR},
       person_signature = #{personSignature,jdbcType=VARCHAR},
       person_age = #{personAge,jdbcType=SMALLINT},
@@ -428,7 +458,9 @@
       person_integration = #{personIntegration,jdbcType=INTEGER},
       person_postcode = #{personPostcode,jdbcType=VARCHAR},
       person_nickname = #{personNickname,jdbcType=VARCHAR},
-      person_portrait = #{personPortrait,jdbcType=VARCHAR}
+      person_portrait = #{personPortrait,jdbcType=VARCHAR},
+      person_password = #{personPassword,jdbcType=VARCHAR},
+      person_account_num = #{personAccountNum,jdbcType=VARCHAR}
     where person_ID = #{personId,jdbcType=INTEGER}
   </update>
 </mapper>

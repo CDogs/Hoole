@@ -21,7 +21,7 @@ public class HooleAccountT {
 
     private String personSex;
 
-    private Date personBirthdate;
+    private Date personBirthday;
 
     private String personConstellation;
 
@@ -40,6 +40,10 @@ public class HooleAccountT {
     private String personNickname;
 
     private String personPortrait;
+
+    private String personPassword;
+
+    private String personAccountNum;
 
     public Integer getPersonId() {
         return personId;
@@ -113,12 +117,12 @@ public class HooleAccountT {
         this.personSex = personSex == null ? null : personSex.trim();
     }
 
-    public Date getPersonBirthdate() {
-        return personBirthdate;
+    public Date getPersonBirthday() {
+        return personBirthday;
     }
 
-    public void setPersonBirthdate(Date personBirthdate) {
-        this.personBirthdate = personBirthdate;
+    public void setPersonBirthday(Date personBirthday) {
+        this.personBirthday = personBirthday;
     }
 
     public String getPersonConstellation() {
@@ -191,5 +195,21 @@ public class HooleAccountT {
 
     public void setPersonPortrait(String personPortrait) {
         this.personPortrait = personPortrait == null ? null : personPortrait.trim();
+    }
+
+    public String getPersonPassword() {
+        return personPassword;
+    }
+
+    public void setPersonPassword(String personPassword) {
+        this.personPassword = personPassword == null ? null : personPassword.trim();
+    }
+
+    public String getPersonAccountNum() {
+        return personAccountNum;
+    }
+
+    public void setPersonAccountNum(String personAccountNum) {
+        this.personAccountNum = personAccountNum == null ? null : personAccountNum.trim();
     }
 }

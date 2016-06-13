@@ -19,20 +19,20 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/media.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/social.css">
 	
-	    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/timepicker/bootstrap-timepicker.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/timepicker/bootstrap-timepicker.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/datepicker/datepicker.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/datepicker/clockface.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/datepicker/bootstrap-datetimepicker.css">
 
+    <link href="${pageContext.request.contextPath}/assets/js/colorPicker/bootstrap-colorpicker.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/js/validate/validate.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/js/idealform/css/jquery.idealforms.css" rel="stylesheet">
 
 
 
 
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
     <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/ico/minus.png">
 </head>
@@ -95,16 +95,16 @@
                         </h1>
                     </div>
 					<div class="account-box" > 
-                        <form role="form" action="1.htm" method="post">
+                        <form role="form" action="Hoole_account_login" method="post">
                             <div class="form-group">
                                 <!--a href="#" class="pull-right label-forgot">Forgot email?</a-->
                                 <label for="inputUsernameEmail">邮箱/手机号/账号</label>
-                                <input type="text" id="inputUsernameEmail" class="form-control">
+                                <input type="text" id="inputUsernameEmail" class="form-control" name="accountname">
                             </div>
                             <div class="form-group">
                                 <a href="#" class="pull-right label-forgot">忘记密码？</a>
                                 <label for="inputPassword">密码</label>
-                                <input type="password" id="inputPassword" class="form-control">
+                                <input type="password" id="inputPassword" class="form-control" name="password">
                             </div>
                             <div class="checkbox pull-left">
                                 <label>
@@ -117,7 +117,7 @@
                         <a class="forgotLnk" href="index.html"></a>
 						<div class="or-box">
                           
-                            <center><span class="text-center login-with">Login or <a href="javascript:loginAndsignup()">Sign Up</a></span></center>
+                            <center><span class="text-center login-with">Login or <a href="javascript:loginOrregister()">Register</a></span></center>
 							
                         </div>
                         
@@ -130,25 +130,35 @@
 					
                 </div>
 				
-				 <div class="col-md-4" id="signup">
+				 <div class="col-md-4" id="register">
                     <div id="logo-login">
                         <h1>Hoole
                             <span>CDogs</span>
                         </h1>
                     </div>
 					<div class="account-box" > 
-                        <form role="form" action="1.htm" method="post">
-							<div class="form-group well">
-									<input type="text" class="form-control" name="email" id="email" placeholder="邮箱/手机号">
+                        <form role="form" action="Hoole_account_register" method="post">
+							<div class="form-group ">
+									<input type="text" class="form-control" name="accountname" id="email" placeholder="邮箱/手机号">
 
 							</div>
-                            <div class="form-group well">
-								<input type="password" id="inputPassword" class="form-control" placeholder="密码">
+                            <div class="form-group ">
+								<input type="password"  class="form-control" placeholder="密码" name="password">
                             </div>
 							
-							<div class="form-group well">
-								<input type="text" class="form-control" id="dp1" placeholder="生日：06/08/2016">
+							<div class="form-group ">
+								<input type="text" class="form-control" id="dp1" placeholder="生日：06/08/2016" name="birthday">
 							</div>
+                            <div class="form-group pull-left">
+                                <span class="label label-info">性别</span>
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                <input tabindex="19" type="radio" id="line-radio-1" name="sex" checked=”“ value="男">
+                                <span for="line-radio-1" class="badge ">男</span>
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                <input tabindex="19" type="radio" id="line-radio-2" name="sex" value="女">
+                                <span  for="line-radio-2" class="badge ">女</span>
+                            </div>
+
 
                             <button class="btn btn btn-primary pull-right" type="submit">
                                 注 册
@@ -159,7 +169,7 @@
 
 						<div class="or-box">
                           
-                           <center><span class="text-center login-with"><a href="javascript:loginAndsignup()">Login</a> or Sign Up</span></center>
+                           <center><span class="text-center login-with"><a href="javascript:loginOrregister()">Login</a> or Register</span></center>
 							
                         </div>
                         
@@ -200,12 +210,11 @@
 	 <!-- /MAIN EFFECT -->
 	
 	
-	    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/colorPicker/bootstrap-colorpicker.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/colorPicker/bootstrap-colorpicker.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/inputMask/jquery.maskedinput.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/switch/bootstrap-switch.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/validate/jquery.validate.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/idealform/jquery.idealforms.js"></script>
-	    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/timepicker/bootstrap-timepicker.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/timepicker/bootstrap-timepicker.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datepicker/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datepicker/clockface.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datepicker/bootstrap-datetimepicker.js"></script>
@@ -215,18 +224,19 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/tag/jquery.tagsinput.js"></script>
 	
 	    <script type="text/javascript">
-		$('#dp1').datepicker();
-		function loginAndsignup(){
-		if($("#login").attr('style')){
-			$("#signup").css("display","none");
-			$("#login").removeAttr('style');
-		
-		}else{
-			$("#login").css("display","none");
-			$("#signup").removeAttr('style');
-		}
-			
-		}
+            $('#dp1').datepicker();
+            <!-- login Or register-->
+            function loginOrregister(){
+                if($("#login").attr('style')){
+                    $("#register").css("display","none");
+                    $("#login").removeAttr('style');
+
+                }else{
+                    $("#login").css("display","none");
+                    $("#register").removeAttr('style');
+                }
+
+            }
 	</script>
 	
 	
