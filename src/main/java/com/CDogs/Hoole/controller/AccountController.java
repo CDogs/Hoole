@@ -1,7 +1,7 @@
 package com.CDogs.Hoole.controller;
 
 import com.CDogs.Hoole.Util.Constellation;
-import com.CDogs.Hoole.pojo.HooleAccountT;
+import com.CDogs.Hoole.pojo.Account;
 import com.CDogs.Hoole.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +33,7 @@ public class AccountController {
     public ModelAndView getAllAccounts()throws Exception{
         ModelAndView modelAndView = new ModelAndView();
         //调用service方法得到用户列表
-        List<HooleAccountT> accounts = accountService.get_all_accounts();
+        List<Account> accounts = accountService.get_all_accounts();
         //将得到的用户列表内容添加到ModelAndView中
         modelAndView.addObject("accounts",accounts);
         //设置响应的jsp视图
@@ -55,7 +55,7 @@ public class AccountController {
         ModelAndView modelAndView = new ModelAndView();
 
         //查找匹配的account
-        HooleAccountT account = accountService.get_account_by_emailOrphoneAndpwd(accountname, password);
+        Account account = accountService.get_account_by_emailOrphoneAndpwd(accountname, password);
 
         if(null == account){
             //设置响应的jsp视图
@@ -83,11 +83,11 @@ public class AccountController {
     @RequestMapping(value = "/Hoole_account_register", method = RequestMethod.POST)
     public ModelAndView accountSignup(String accountname, String password, String birthday, String sex)throws Exception{
         ModelAndView modelAndView = new ModelAndView();
-        HooleAccountT account = new HooleAccountT();
-        account.setPersonPassword(password);
+        Account account = new Account();
+        account.setPassword(password);
         //邮箱
         if(accountname.matches("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?")){
-            account.setPersonEmail(accountname);
+            account.setEmail(accountname);
             if(null != accountService.get_account_by_email(accountname)){
                 modelAndView.addObject("registerError","该邮箱已注册");
                 modelAndView.setViewName("Account/Hoole_registerError");
@@ -95,7 +95,7 @@ public class AccountController {
             }
         }else{
         //手机号
-            account.setPersonPhone(accountname);
+            account.setPhone(accountname);
             if(null != accountService.get_account_by_phone(accountname)){
                 modelAndView.addObject("registerError","该手机已注册");
                 modelAndView.setViewName("Account/Hoole_registerError");
@@ -105,11 +105,11 @@ public class AccountController {
 
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date date = format.parse(birthday + " 00:00:00");
-        account.setPersonBirthday(date);
+        account.setBirthday(date);
         int day = Integer.valueOf(birthday.substring(4,5));
         int month = Integer.valueOf(birthday.substring(1,2));
-        account.setPersonConstellation(Constellation.getConstellation(month,day));
-        account.setPersonSex(sex);
+        account.setConstellation(Constellation.getConstellation(month, day));
+        account.setSex(sex);
         accountService.add_account(account);
         //设置响应的jsp视图
         modelAndView.addObject("loginError","注册成功，欢迎拥抱Hoole");
@@ -140,15 +140,20 @@ public class AccountController {
      * @throws Exception
      */
     @RequestMapping(value = "/Hoole_account_modify", method = RequestMethod.POST)
-    public ModelAndView accountModify(HooleAccountT account, HttpSession session)throws Exception {
+    public ModelAndView accountModify(Account account, HttpSession session)throws Exception {
 
         ModelAndView modelAndView = new ModelAndView();
-        HooleAccountT currentAccount = (HooleAccountT) session.getAttribute("account");
-        account.setPersonId(currentAccount.getPersonId());
-        account.setPersonConstellation(Constellation.getConstellation(account.getPersonBirthday().getMonth()+1,account.getPersonBirthday().getDate()));
+        Account currentAccount = (Account) session.getAttribute("account");
+        account.setId(currentAccount.getId());
+
+        account.setConstellation(Constellation.getConstellation(account.getBirthday().getMonth() + 1, account.getBirthday().getDate()));
         accountService.modify_account(account);
-        account = accountService.get_account_by_id(account.getPersonId());
-        session.setAttribute("account",account);
+
+        account = accountService.get_account_by_id(account.getId());
+
+        session.setAttribute("account", account);
+        modelAndView.addObject("account", account);
+
 
         modelAndView.setViewName("Account/Hoole_profile");
         return modelAndView;

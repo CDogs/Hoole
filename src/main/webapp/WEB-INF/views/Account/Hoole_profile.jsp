@@ -124,22 +124,22 @@
                                         <li class="list-group-item text-right">
                                             <span class="pull-left">
                                                 <strong>入伙</strong>
-                                            </span>${account.personCreateTime}</li>
+                                            </span>${account.createTime}</li>
                                         <li class="list-group-item text-right">
                                             <span class="pull-left">
                                                 <strong>上次登录</strong>
-                                            </span>${account.personLastTime}</li>
+                                            </span>${account.lastLoginTime}</li>
                                         <li class="list-group-item text-right">
                                             <span class="pull-left">
                                                 <strong>昵称</strong>
-                                            </span>${account.personNickname}</li>
+                                            </span>${account.nickname}</li>
 
                                     </ul>
 
                                     <button class="btn btn-info btn-block" id="editProfileBN"><span class="fa fa-user"></span>&nbsp;&nbsp;Edit Profile</button>
                                 </div>
                                 <div class="col-xs-12 col-sm-8 profile-name">
-                                    <h2>${account.personNickname}
+                                    <h2>${account.nickname}
                                         <span class="pull-right social-profile">
                                             <i class="entypo-facebook-circled"></i>  <i class="entypo-twitter-circled"></i>  <i class="entypo-linkedin-circled"></i>  <i class="entypo-github-circled"></i>  <i class="entypo-gplus-circled"></i>
                                         </span>
@@ -148,43 +148,43 @@
 
                                     <dl class="dl-horizontal-profile">
                                         <dt>账号</dt>
-                                        <dd>${account.personAccountNum}</dd>
+                                        <dd>${account.accountNum}</dd>
 
                                         <dt>个性签名</dt>
-                                        <dd>${account.personSignature}</dd>
+                                        <dd>${account.signature}</dd>
 
                                         <dt>等级</dt>
-                                        <dd>${account.personGrade}</dd>
+                                        <dd>${account.grade}</dd>
 
                                         <dt>积分</dt>
-                                        <dd>${account.personIntegration}</dd>
+                                        <dd>${account.integration}</dd>
 
                                         <dt>性别</dt>
-                                        <dd>${account.personSex}</dd>
+                                        <dd>${account.sex}</dd>
 
                                         <dt>生日</dt>
-                                        <dd>${account.personBirthday}</dd>
+                                        <dd>${account.birthday}</dd>
 
                                         <dt>星座</dt>
-                                        <dd>${account.personConstellation}</dd>
+                                        <dd>${account.constellation}</dd>
 
                                         <dt>邮箱</dt>
-                                        <dd>${account.personEmail}</dd>
+                                        <dd>${account.email}</dd>
 
                                         <dt>手机</dt>
-                                        <dd>${account.personPhone}</dd>
+                                        <dd>${account.phone}</dd>
 
                                         <dt>学校</dt>
-                                        <dd>${account.personSchool}</dd>
+                                        <dd>${account.school}</dd>
 
                                         <dt>公司</dt>
-                                        <dd>${account.personCompany}</dd>
+                                        <dd>${account.company}</dd>
 
                                         <dt>家庭地址</dt>
-                                        <dd>${account.personAddress}</dd>
+                                        <dd>${account.address}</dd>
 
                                         <dt>邮编</dt>
-                                        <dd>${account.personPostcode}</dd>
+                                        <dd>${account.postcode}</dd>
 
 
 
@@ -299,43 +299,43 @@
                                             <div class="form-group">
                                                 <label class="col-lg-3 control-label">昵称：</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control" value="${account.personNickname}" type="text" name="personNickname">
+                                                    <input class="form-control" value="${account.nickname}" type="text" name="nickname">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-lg-3 control-label">个性签名：</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control" value="${account.personSignature}" type="text" name="personSinature">
+                                                    <input class="form-control" value="${account.signature}" type="text" name="signature">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-lg-3 control-label">邮箱：</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control" value="${account.personEmail}" type="text" name="personEmail">
+                                                    <input class="form-control" value="${account.email}" type="text" name="email">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-lg-3 control-label">手机：</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control" value="${account.personPhone}" type="text" name="personPhone">
+                                                    <input class="form-control" value="${account.phone}" type="text" name="phone">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-lg-3 control-label">生日：</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control" id="dp1" value="${account.personBirthday}" type="text" name="personBirthday">
+                                                    <input class="form-control" id="dp1" value="${account.birthday}" type="text" name="birthday">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-lg-3 control-label">学校：</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control" value="${account.personSchool}" type="text" name="personSchool">
+                                                    <input class="form-control" value="${account.school}" type="text" name="school">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-lg-3 control-label">公司：</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control" value="${account.personCompany}" type="text" name="personCompany">
+                                                    <input class="form-control" value="${account.company}" type="text" name="company">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -358,13 +358,13 @@
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">家庭地址：</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" value="${account.personAddress}" type="text" name="personAddress">
+                                                    <input class="form-control" value="${account.address}" type="text" name="address">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">邮编：</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" value="${account.personPostcode}" type="text" name="personPostcode">
+                                                    <input class="form-control" value="${account.postcode}" type="text" name="postcode">
                                                 </div>
                                             </div>
 

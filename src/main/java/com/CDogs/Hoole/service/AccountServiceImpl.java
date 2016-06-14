@@ -1,8 +1,8 @@
 package com.CDogs.Hoole.service;
 
-import com.CDogs.Hoole.mapper.HooleAccountTMapper;
-import com.CDogs.Hoole.pojo.HooleAccountT;
-import com.CDogs.Hoole.pojo.HooleAccountTExample;
+import com.CDogs.Hoole.mapper.AccountMapper;
+import com.CDogs.Hoole.pojo.Account;
+import com.CDogs.Hoole.pojo.AccountExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class AccountServiceImpl implements AccountService {
 
     //mapper接口注入
     @Autowired
-    private HooleAccountTMapper accountTMapper;
+    private AccountMapper accountMapper;
 
     /**
      * 按id号查询
@@ -26,8 +26,8 @@ public class AccountServiceImpl implements AccountService {
      * @return
      * @throws Exception
      */
-    public HooleAccountT get_account_by_id(int id) throws Exception {
-        return accountTMapper.selectByPrimaryKey(id);
+    public Account get_account_by_id(int id) throws Exception {
+        return accountMapper.selectByPrimaryKey(id);
     }
 
     /**
@@ -35,10 +35,10 @@ public class AccountServiceImpl implements AccountService {
      * @return
      * @throws Exception
      */
-    public List<HooleAccountT> get_all_accounts() throws Exception {
+    public List<Account> get_all_accounts() throws Exception {
 
         //调用mapper类中的selectByExample方法，如果传入类型为null，则表示无条件查找
-        List<HooleAccountT> accounts = accountTMapper.selectByExample(null);
+        List<Account> accounts = accountMapper.selectByExample(null);
         return accounts;
     }
 
@@ -47,18 +47,17 @@ public class AccountServiceImpl implements AccountService {
      * @param account
      * @throws Exception
      */
-    public void add_account(HooleAccountT account) throws Exception {
-        account.setPersonCreateTime(new Date(System.currentTimeMillis()));
-        account.setPersonAge(Short.valueOf("25"));
-        account.setPersonGrade(0);
-        account.setPersonIntegration(0);
-        account.setPersonNickname("hoole" + Math.round(Math.random() * 10000));
-        account.setPersonLastTime(new Date(System.currentTimeMillis()));
-        account.setPersonState("在线");
-        account.setPersonSignature("Hello to Hoole");
-        account.setPersonAccountNum(UUID.randomUUID().toString().substring(0, 13));
-        //调用mapper类中的insert方法，如果传入类型为HooleAccountT
-        accountTMapper.insert(account);
+    public void add_account(Account account) throws Exception {
+        account.setCreateTime(new Date(System.currentTimeMillis()));
+        account.setGrade(0);
+        account.setIntegration(0);
+        account.setNickname("hoole" + Math.round(Math.random() * 10000));
+        account.setLastLoginTime(new Date(System.currentTimeMillis()));
+        account.setState("在线");
+        account.setSignature("Hello to Hoole");
+        account.setAccountNum(UUID.randomUUID().toString().substring(0, 13));
+        //调用mapper类中的insert方法，如果传入类型为Account
+        accountMapper.insert(account);
     }
 
     /**
@@ -68,25 +67,25 @@ public class AccountServiceImpl implements AccountService {
      * @return
      * @throws Exception
      */
-    public HooleAccountT get_account_by_emailOrphoneAndpwd(String accountname, String password) throws Exception {
+    public Account get_account_by_emailOrphoneAndpwd(String accountname, String password) throws Exception {
 
-        HooleAccountTExample example = new HooleAccountTExample();
+        AccountExample example = new AccountExample();
         example.setDistinct(true);
         if(accountname.matches("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?")){
-            example.or().andPersonEmailEqualTo(accountname).andPersonPasswordEqualTo(password);
+            example.or().andEmailEqualTo(accountname).andPasswordEqualTo(password);
         }else{
             //手机号
-            example.or().andPersonPhoneEqualTo(accountname).andPersonPasswordEqualTo(password);
+            example.or().andPhoneEqualTo(accountname).andPasswordEqualTo(password);
         }
 
-        List<HooleAccountT> accounts = accountTMapper.selectByExample(example);
+        List<Account> accounts = accountMapper.selectByExample(example);
 
         if(accounts.size()<=0)return null;
 
         //更新上次登录时间
-        HooleAccountT account = accounts.get(0);
-        account.setPersonLastTime(new Date());
-        accountTMapper.updateByPrimaryKey(account);
+        Account account = accounts.get(0);
+        account.setLastLoginTime(new Date());
+        accountMapper.updateByPrimaryKey(account);
 
 
         return accounts.get(0);
@@ -98,12 +97,12 @@ public class AccountServiceImpl implements AccountService {
      * @return
      * @throws Exception
      */
-    public HooleAccountT get_account_by_email(String email) throws Exception {
+    public Account get_account_by_email(String email) throws Exception {
 
-        HooleAccountTExample example = new HooleAccountTExample();
+        AccountExample example = new AccountExample();
         example.setDistinct(true);
-        example.or().andPersonEmailEqualTo(email);
-        List<HooleAccountT> accounts = accountTMapper.selectByExample(example);
+        example.or().andEmailEqualTo(email);
+        List<Account> accounts = accountMapper.selectByExample(example);
 
         if(accounts.size()<=0)return null;
 
@@ -116,12 +115,12 @@ public class AccountServiceImpl implements AccountService {
      * @return
      * @throws Exception
      */
-    public HooleAccountT get_account_by_phone(String phone) throws Exception {
+    public Account get_account_by_phone(String phone) throws Exception {
 
-        HooleAccountTExample example = new HooleAccountTExample();
+        AccountExample example = new AccountExample();
         example.setDistinct(true);
-        example.or().andPersonPhoneEqualTo(phone);
-        List<HooleAccountT> accounts = accountTMapper.selectByExample(example);
+        example.or().andPhoneEqualTo(phone);
+        List<Account> accounts = accountMapper.selectByExample(example);
 
         if(accounts.size()<=0)return null;
 
@@ -133,34 +132,34 @@ public class AccountServiceImpl implements AccountService {
      * @param account
      * @throws Exception
      */
-    public void modify_account(HooleAccountT account) throws Exception {
+    public void modify_account(Account account) throws Exception {
 
-        accountTMapper.updateByPrimaryKeySelective(account);
+        accountMapper.updateByPrimaryKeySelective(account);
 
     }
 
     //添加批量用户用于测试
 /*    public void addAccounts(){
-        HooleAccountT account = new HooleAccountT();
+        Account account = new Account();
         for(int i=205; i<1000;++i){
-            account.setPersonCreateTime(new Date(System.currentTimeMillis()));
-            account.setPersonAddress(i + "官洲");
-            account.setPersonAge(Short.valueOf("12"));
-            account.setPersonBirthdate(new Date(System.currentTimeMillis()));
-            account.setPersonCompany("Hoole");
-            account.setPersonEmail((Math.random() * 10000) / 10 + "@hoole.com");
-            account.setPersonGrade(i);
-            account.setPersonIntegration(i);
-            account.setPersonNickname("hoole" + i);
-            account.setPersonLastTime(new Date(System.currentTimeMillis()));
-            account.setPersonConstellation("巨蟹座");
-            account.setPersonPhone((Math.random() * 10000) / 10 + "2");
-            account.setPersonPortrait("hoole");
-            account.setPersonPostcode("123456");
-            account.setPersonSchool("武汉理工大学");
-            account.setPersonSex("女");
-            account.setPersonSignature("123");
-            account.setPersonState("在线");
+            account.setCreateTime(new Date(System.currentTimeMillis()));
+            account.setAddress(i + "官洲");
+            account.setAge(Short.valueOf("12"));
+            account.setBirthday(new Date(System.currentTimeMillis()));
+            account.setCompany("Hoole");
+            account.setEmail((Math.random() * 10000) / 10 + "@hoole.com");
+            account.setGrade(i);
+            account.setIntegration(i);
+            account.setNickname("hoole" + i);
+            account.setLastTime(new Date(System.currentTimeMillis()));
+            account.setConstellation("巨蟹座");
+            account.setPhone((Math.random() * 10000) / 10 + "2");
+            account.setPortrait("hoole");
+            account.setPostcode("123456");
+            account.setSchool("武汉理工大学");
+            account.setSex("女");
+            account.setSignature("123");
+            account.setState("在线");
             try {
                 add_account(account);
             } catch (Exception e) {

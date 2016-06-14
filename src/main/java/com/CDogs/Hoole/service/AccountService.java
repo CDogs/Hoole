@@ -1,6 +1,6 @@
 package com.CDogs.Hoole.service;
 
-import com.CDogs.Hoole.pojo.HooleAccountT;
+import com.CDogs.Hoole.pojo.Account;
 
 import java.util.List;
 
@@ -14,25 +14,25 @@ public interface AccountService {
      * @return
      * @throws Exception
      */
-    HooleAccountT get_account_by_id(int id) throws Exception;
+    Account get_account_by_id(int id) throws Exception;
     /**
      * 查找所有用户
      * @return
      * @throws Exception
      */
-    List<HooleAccountT> get_all_accounts()throws Exception;
+    List<Account> get_all_accounts()throws Exception;
     /**
      * 添加用户
      * @return
      * @throws Exception
      */
-     void add_account(HooleAccountT account) throws Exception;
+     void add_account(Account account) throws Exception;
     /**
      * 按邮箱或手机号 和 密码 查找用户
      * @return
      * @throws Exception
      */
-     HooleAccountT get_account_by_emailOrphoneAndpwd(String accountname, String password) throws Exception;
+     Account get_account_by_emailOrphoneAndpwd(String accountname, String password) throws Exception;
 
     /**
      * 按邮箱查找用户
@@ -40,7 +40,7 @@ public interface AccountService {
      * @return
      * @throws Exception
      */
-     HooleAccountT get_account_by_email(String email) throws Exception;
+     Account get_account_by_email(String email) throws Exception;
 
     /**
      * 按手机号查找用户
@@ -48,12 +48,12 @@ public interface AccountService {
      * @return
      * @throws Exception
      */
-     HooleAccountT get_account_by_phone(String phone) throws Exception;
+     Account get_account_by_phone(String phone) throws Exception;
 
     /**
      * 修改个人信息
      * @param account
      * @throws Exception
      */
-     void modify_account(HooleAccountT account) throws Exception;
+     void modify_account(Account account) throws Exception;
 }

@@ -30,15 +30,15 @@
     </bean>
 
     <!--sqlsessionFactory bean-->
-    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation" value="classpath:config/mybatis/SqlMapConfig.xml"/>
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!--自动扫描mapper接口，并注入sqlsession-->
+    <!--自动扫描mapper接口，并注入sqlsessionFactory-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.CDogs.Hoole.mapper"/>
-        <property name="sqlSessionFactoryBeanName" value="sqlSession"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
     <!--扫描service-->
