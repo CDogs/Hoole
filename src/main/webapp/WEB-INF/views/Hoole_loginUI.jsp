@@ -240,20 +240,17 @@
 
             }
 
-//表单验证
             function validateForm(frm) {
                 var a = $(frm).serializeArray();
                 var flag = true;
                 $.each(a,function () {
 
                     if ("" == this.value.trim() || null == this.value.trim() || this.value == undefined ) {
-
+                        alert("完善您的信息！");
                         flag = false;
                     }
                 });
-                if(!flag){
-                    alert("完善您的信息！");
-                }
+
                 return flag;
             }
 
@@ -291,21 +288,20 @@
             //register调用
             $(document).ready(function(){
                 $('#registerForm').bind('submit', function(){
-                    if(validateForm(this)){
-                        ajaxSubmit(this, function(data){
-                            
-                            if(data == "registerSuccess"){
+                    if(validateForm(this)) {
+                        ajaxSubmit(this, function (data) {
+
+                            if (data == "registerSuccess") {
                                 $('#loginMSG').text("注册成功，Hi Hoole.");
                                 loginOrregister();
-                            }else if(data == "errorEmail"){
+                            } else if (data == "errorEmail") {
                                 $('#registerMSG').text("邮箱已被注册，请选择其他邮箱");
-                            }else if(data == "errorPhone"){
+                            } else if (data == "errorPhone") {
                                 $('#registerMSG').text("手机已被注册");
                             }
 
                         });
                     }
-
                     return false;
                 });
             });

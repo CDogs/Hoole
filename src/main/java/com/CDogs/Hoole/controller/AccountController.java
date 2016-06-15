@@ -1,12 +1,18 @@
 package com.CDogs.Hoole.controller;
 
 import com.CDogs.Hoole.Util.Constellation;
+import com.CDogs.Hoole.Util.FileUtils;
 import com.CDogs.Hoole.pojo.Account;
 import com.CDogs.Hoole.service.AccountService;
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -43,36 +49,34 @@ public class AccountController {
     }
 
     /**
-     * 用户登录
+     * 用户登录(异步）
      * @param accountname
      * @param password
      * @param session
      * @return
      * @throws Exception
      */
-    @RequestMapping("/Hoole_account_login")
-    public ModelAndView accountLogin(String accountname, String password,HttpSession session)throws Exception{
-        ModelAndView modelAndView = new ModelAndView();
+    @RequestMapping(value = "/Hoole_account_login", method = RequestMethod.POST)
+    @ResponseBody
+    public String accountLogin(String accountname, String password,HttpSession session)throws Exception{
+
+        System.out.println("accountLogin...");
 
         //查找匹配的account
         Account account = accountService.get_account_by_emailOrphoneAndpwd(accountname, password);
 
         if(null == account){
-            //设置响应的jsp视图
-            modelAndView.addObject("loginError","账号或密码错误");
-            modelAndView.setViewName("Account/Hoole_loginError");
-        }else{
-            //将用户添加到session中
-            session.setAttribute("account",account);
-            //设置响应的jsp视图
-            modelAndView.setViewName("Account/Hoole_index");
+            //异步返回信息
+            return "loginError";
         }
+            //将用户添加到session中
+        session.setAttribute("account", account);
 
-        return modelAndView;
+        return "loginSuccess";
     }
 
     /**
-     * 用户注册
+     * 用户注册(异步)
      * @param accountname
      * @param password
      * @param birthday
@@ -81,25 +85,22 @@ public class AccountController {
      * @throws Exception
      */
     @RequestMapping(value = "/Hoole_account_register", method = RequestMethod.POST)
-    public ModelAndView accountSignup(String accountname, String password, String birthday, String sex)throws Exception{
-        ModelAndView modelAndView = new ModelAndView();
+    @ResponseBody
+    public String accountRegister(String accountname, String password, String birthday, String sex)throws Exception{
+        System.out.println("accountRegister...");
         Account account = new Account();
         account.setPassword(password);
         //邮箱
         if(accountname.matches("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?")){
             account.setEmail(accountname);
             if(null != accountService.get_account_by_email(accountname)){
-                modelAndView.addObject("registerError","该邮箱已注册");
-                modelAndView.setViewName("Account/Hoole_registerError");
-                return modelAndView;
+                return "errorEmail";
             }
         }else{
         //手机号
             account.setPhone(accountname);
             if(null != accountService.get_account_by_phone(accountname)){
-                modelAndView.addObject("registerError","该手机已注册");
-                modelAndView.setViewName("Account/Hoole_registerError");
-                return modelAndView;
+                return "errorPhone";
             }
         }
 
@@ -107,15 +108,13 @@ public class AccountController {
         Date date = format.parse(birthday + " 00:00:00");
         account.setBirthday(date);
         int day = Integer.valueOf(birthday.substring(4,5));
-        int month = Integer.valueOf(birthday.substring(1,2));
+        int month = Integer.valueOf(birthday.substring(1, 2));
         account.setConstellation(Constellation.getConstellation(month, day));
         account.setSex(sex);
         accountService.add_account(account);
         //设置响应的jsp视图
-        modelAndView.addObject("loginError","注册成功，欢迎拥抱Hoole");
-        modelAndView.setViewName("Account/Hoole_loginError");
 
-        return modelAndView;
+        return "registerSuccess";
     }
 
     /**
@@ -157,6 +156,104 @@ public class AccountController {
 
         modelAndView.setViewName("Account/Hoole_profile");
         return modelAndView;
+    }
+
+    /**
+     * 异步需要用到@ResponseBody
+     * 头像上传
+     * @param portraitUpload
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/Hoole_account_portrait_upload", method = RequestMethod.POST)
+    @ResponseBody
+    public String accountPortraitUpload(MultipartFile portraitUpload, HttpSession session)throws Exception {
+
+
+        System.out.println("开始异步上传。。。。");
+
+        //记录上传过程起始时的时间，用来计算上传时间
+        int pre = (int) System.currentTimeMillis();
+        if( null == portraitUpload || portraitUpload.isEmpty()){
+            return "error";
+        }
+
+
+        Account currentAccount = (Account) session.getAttribute("account");
+        System.out.println(session.getServletContext().getContextPath());
+        String basePath = session.getServletContext().getRealPath("/AccountFile") + "/" + currentAccount.getId() + "/portrait/";
+        String portraitPath = FileUtils.saveMultipartFileRelative(portraitUpload, basePath);
+
+        //记录上传该文件后的时间
+        int finaltime = (int) System.currentTimeMillis();
+        System.out.println(finaltime - pre);
+
+        portraitPath = "/AccountFile" + portraitPath;
+        System.out.println(portraitPath);
+
+        currentAccount.setPortrait(portraitPath);
+
+        accountService.modify_account(currentAccount);
+
+        currentAccount = accountService.get_account_by_id(currentAccount.getId());
+
+        session.setAttribute("account", currentAccount);
+
+
+        return portraitPath;
+    }
+
+
+    /**
+     * 跳转到主页
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/Hoole_index")
+    public ModelAndView goToHooleIndex(HttpSession session) throws Exception {
+        System.out.println("goToHooleIndex...");
+        ModelAndView modelAndView = new ModelAndView();
+
+        Account account = (Account) session.getAttribute("account");
+        if(null == account){
+            //没登陆
+            modelAndView.setViewName("redirect:/Hoole_loginUI");
+        }else {
+            //登录跳转
+            modelAndView.setViewName("Account/Hoole_index");
+        }
+
+        return modelAndView;
+    }
+
+    /**
+     * 退出
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/Hoole_account_logout")
+    public ModelAndView accountLogout(HttpSession session) throws  Exception {
+        System.out.println("accountLogout..");
+        ModelAndView modelAndView = new ModelAndView();
+
+        session.removeAttribute("account");
+
+        modelAndView.setViewName("redirect:/Hoole_loginUI");
+
+        return modelAndView;
+    }
+
+    /**
+     * 跳转到loginUI
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/Hoole_loginUI")
+    public String goToLoginUI() throws Exception{
+        return "Hoole_loginUI";
     }
 
 }

@@ -95,7 +95,7 @@
                         </h1>
                     </div>
 					<div class="account-box" > 
-                        <form role="form" action="Hoole_account_login" method="post">
+                        <form role="form" action="Hoole_account_login" method="post" id="loginForm">
                             <div class="form-group">
                                 <!--a href="#" class="pull-right label-forgot">Forgot email?</a-->
                                 <label for="inputUsernameEmail">邮箱/手机号/账号</label>
@@ -123,7 +123,7 @@
                         
                         <div class="row-block">
 	                        <div class="row">
-							
+							<span class="alert-warning" id="loginMSG" style="font-color: red"></span>
 		                    </div>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                         </h1>
                     </div>
 					<div class="account-box" > 
-                        <form role="form" action="Hoole_account_register" method="post">
+                        <form role="form" action="Hoole_account_register" method="post" id="registerForm">
 							<div class="form-group ">
 									<input type="text" class="form-control" name="accountname" id="email" placeholder="邮箱/手机号">
 
@@ -152,7 +152,7 @@
                             <div class="form-group pull-left">
                                 <span class="label label-info">性别</span>
                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                <input tabindex="19" type="radio" id="line-radio-1" name="sex" checked=”“ value="男">
+                                <input tabindex="19" type="radio" id="line-radio-1" name="sex" checked="" value="男">
                                 <span for="line-radio-1" class="badge ">男</span>
                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                 <input tabindex="19" type="radio" id="line-radio-2" name="sex" value="女">
@@ -175,7 +175,7 @@
                         
                         <div class="row-block">
 	                        <div class="row">
-							
+							<span class="alert-warning" id="registerMSG" style="font-color: red"></span>
 		                    </div>
                         </div>
                     </div>
@@ -222,8 +222,10 @@
 
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/tag/jquery.tagsinput.js"></script>
-	
+
+
 	    <script type="text/javascript">
+            <!-- 日期选择器 -->
             $('#dp1').datepicker();
             <!-- login Or register-->
             function loginOrregister(){
@@ -237,15 +239,96 @@
                 }
 
             }
-	</script>
-	
-	
 
+//表单验证
+            function validateForm(frm) {
+                var a = $(frm).serializeArray();
+                var flag = true;
+                $.each(a,function () {
 
+                    if ("" == this.value.trim() || null == this.value.trim() || this.value == undefined ) {
 
+                        flag = false;
+                    }
+                });
+                if(!flag){
+                    alert("完善您的信息！");
+                }
+                return flag;
+            }
 
+<!-- 异步表单提交 -->
+            //将form转为AJAX提交
+            function ajaxSubmit(frm, fn) {
+                var dataPara = getFormJson(frm);
+                $.ajax({
+                    url: frm.action,
+                    type: frm.method,
+                    dataType: 'text',
+                    data: dataPara,
+                    success: fn
+                });
+            }
 
+            //将form中的值转换为键值对。
+            function getFormJson(frm) {
+                var o = {};
+                var a = $(frm).serializeArray();
+                $.each(a, function () {
+                    if (o[this.name] !== undefined) {
+                        if (!o[this.name].push) {
+                            o[this.name] = [o[this.name]];
+                        }
+                        o[this.name].push(this.value || '');
+                    } else {
+                        o[this.name] = this.value || '';
+                    }
+                });
 
+                return o;
+            }
+
+            //register调用
+            $(document).ready(function(){
+                $('#registerForm').bind('submit', function(){
+                    if(validateForm(this)){
+                        ajaxSubmit(this, function(data){
+                            
+                            if(data == "registerSuccess"){
+                                $('#loginMSG').text("注册成功，Hi Hoole.");
+                                loginOrregister();
+                            }else if(data == "errorEmail"){
+                                $('#registerMSG').text("邮箱已被注册，请选择其他邮箱");
+                            }else if(data == "errorPhone"){
+                                $('#registerMSG').text("手机已被注册");
+                            }
+
+                        });
+                    }
+
+                    return false;
+                });
+            });
+
+            //login调用
+            $(document).ready(function(){
+                $('#loginForm').bind('submit', function(){
+                    ajaxSubmit(this, function(data){
+
+                         if(data == "loginError") {
+                             $('#loginMSG').text("登录失败，请重新登录");
+                         }else if( data == "loginSuccess" ){
+                             window.location.assign("Hoole_index");
+                         }
+
+                    });
+                    return false;
+                });
+            });
+
+            <!-- 异步表单提交 -->
+
+        </script>
 
 
 </body>

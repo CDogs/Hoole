@@ -25,4 +25,16 @@
     <!-- 静态资源文件加载过滤 -->
     <!-- 也可以自己定义过滤器过滤掉特定资源的访问 -->
     <mvc:resources mapping="/assets/**" location="/assets/" />
+    <mvc:resources mapping="/AccountFile/**" location="/AccountFile/" />
+
+    <!-- 多部件处理器 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 编码格式 -->
+        <property name="defaultEncoding" value="utf-8"></property>
+        <!-- 最大上传容量 -->
+        <property name="maxUploadSize" value="10485760000"></property>
+        <!-- 最大内存容量 -->
+        <property name="maxInMemorySize" value="40960"></property>
+    </bean>
+
 </beans>

@@ -51,16 +51,11 @@
             <!-- BREADCRUMB -->
             <ul id="breadcrumb">
                 <li>
-                    <span class="entypo-home"></span>
+                    <a href="Hoole_index" title="主页"><span class="entypo-home"></span></a>
                 </li>
                 <li><i class="fa fa-lg fa-angle-right"></i>
                 </li>
-                <li><a href="#" title="Sample page 1">Extra Pages</a>
-                </li>
-                <li><i class="fa fa-lg fa-angle-right"></i>
-                </li>
-                <li><a href="#" title="Sample page 1">Blank Page</a>
-                </li>
+                <li><a href="#" title="个人资料">Profile</a>
                 <li class="pull-right">
                     <div class="input-group input-widget">
 
@@ -89,7 +84,7 @@
                                         <li class="list-group-item text-left">
                                             <span class="entypo-user"></span>&nbsp;&nbsp;Profile</li>
                                         <li class="list-group-item text-center">
-                                            <img src="http://api.randomuser.me/portraits/men/10.jpg" alt="" class="img-circle img-responsive img-profile">
+                                            <img style="width:200px; height:200px" src="${pageContext.request.contextPath}${account.portrait}" alt="" class="img-circle img-responsive img-profile portrait">
 
                                         </li>
                                         <li class="list-group-item text-center">
@@ -261,26 +256,26 @@
                             <div class="body-nest" id="Blank_Page_Content">
 
 
-
-
                                 <div class="row">
 
 
                                     <!-- left column -->
                                     <div class="col-md-3">
                                         <div class="text-center">
-                                            <img src="http://api.randomuser.me/portraits/men/10.jpg" class="avatar img-circle" alt="avatar">
-                                            <h6>Upload a different photo...</h6>
+                                            <img style="width:180px;height:180px;" src="${pageContext.request.contextPath}${account.portrait}" class="img-circle img-responsive img-profile portrait" alt="avatar" >
+                                            <h6> Hi  Hoole </h6>
 
                                             <div class="input-group">
                                                     <span class="input-group-btn">
-                                                        <span class="btn btn-primary btn-file">
-                                                            Browse
-                                                            <input type="file" multiple="">
+                                                        <span class="btn btn-warning btn-block btn-file">
+                                                            <span class="fa fa-user"></span>&nbsp;&nbsp;Browse..
+                                                            <input type="file" name="portraitUpload" id="portraitUpload">
                                                         </span>
                                                     </span>
-                                                <input type="text" class="form-control">
+                                                <button class="btn btn-info btn-block" id="uploadBN">确定</button>
                                             </div>
+
+                                            <span id="uploadMSG"></span>
 
                                         </div>
                                     </div>
@@ -414,6 +409,7 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 
 
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/fileUpload/ajaxfileupload.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/colorPicker/bootstrap-colorpicker.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/inputMask/jquery.maskedinput.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/validate/jquery.validate.min.js"></script>
@@ -428,6 +424,7 @@
             <!--日期选择器-->
             $('#dp1').datepicker();
             <!-- show Or edit-->
+
             $('#editProfileBN').click(
                     function edit(){
                         $("#profileShow").css("display","none");
@@ -438,6 +435,33 @@
                         $("#profileEdit").css("display","none");
                         $("#profileShow").removeAttr('style');
                     });
+
+            $("#uploadBN").click(function(){
+                $.ajaxFileUpload({
+                            url:'Hoole_account_portrait_upload',
+                            dataType : 'text',
+                            fileElementId:'portraitUpload',
+                            success: function (data, status){
+
+                                if("error" == data){
+                                    $("#uploadMSG").text("修改失败");
+                                }else{
+                                    //$("#uploadMSG").text("修改成功");
+                                    $(".portrait").attr("src","${pageContext.request.contextPath}"+data);
+                                }
+
+
+                            },
+                            error: function (data, status)
+                            {
+                                alert("失败" + data);
+                                $("#uploadMSG").text("修改失败");
+                            }
+                        }
+            )});
+
+
+
         </script>
 
 </body>

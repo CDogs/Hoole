@@ -187,7 +187,7 @@
                 <ul style="margin-right:0;" class="nav navbar-nav navbar-right">
                     <li>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <img alt="" class="admin-pic img-circle" src="http://api.randomuser.me/portraits/thumb/men/10.jpg">Hi,${account.nickname } <b class="caret"></b>
+                            <img alt="" class="admin-pic img-circle" src="${pageContext.request.contextPath}${account.portrait}">Hi,${account.nickname } <b class="caret"></b>
                         </a>
                         <ul style="margin-top:14px;" role="menu" class="dropdown-setting dropdown-menu">
                             <li>
@@ -204,8 +204,8 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="http://themeforest.net/item/apricot-navigation-admin-dashboard-template/7664475?WT.ac=category_item&WT.z_author=themesmile">
-                                    <span class="entypo-basket"></span>&#160;&#160; Purchase</a>
+                                <a href="Hoole_account_logout">
+                                    <span class="entypo-logout"></span>&#160;&#160; 退出 </a>
                             </li>
                         </ul>
                     </li>
@@ -494,16 +494,10 @@
             <!-- BREADCRUMB -->
             <ul id="breadcrumb">
                 <li>
-                    <span class="entypo-home"></span>
+                    <a href="#" title="主页"><span class="entypo-home"></span></a>
                 </li>
-                <li><i class="fa fa-lg fa-angle-right"></i>
-                </li>
-                <li><a href="#" title="Sample page 1">Home</a>
-                </li>
-                <li><i class="fa fa-lg fa-angle-right"></i>
-                </li>
-                <li><a href="#" title="Sample page 1">Social</a>
-                </li>
+
+
                 <li class="pull-right">
                     <div class="input-group input-widget">
 
