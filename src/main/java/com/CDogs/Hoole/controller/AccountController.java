@@ -2,25 +2,30 @@ package com.CDogs.Hoole.controller;
 
 import com.CDogs.Hoole.Util.Constellation;
 import com.CDogs.Hoole.Util.FileUtils;
+import com.CDogs.Hoole.Util.JacksonUtils;
+import com.CDogs.Hoole.Util.ServiceModel;
 import com.CDogs.Hoole.pojo.Account;
 import com.CDogs.Hoole.service.AccountService;
 
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+
+
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
+ * 用户登录注册修改信息控制器
  * Created by CDogs on 2016/6/8.
  */
 @Controller
@@ -36,16 +41,13 @@ public class AccountController {
      * @throws Exception
      */
     @RequestMapping("account/get_all_accounts")
-    public ModelAndView getAllAccounts()throws Exception{
-        ModelAndView modelAndView = new ModelAndView();
-        //调用service方法得到用户列表
-        List<Account> accounts = accountService.get_all_accounts();
-        //将得到的用户列表内容添加到ModelAndView中
-        modelAndView.addObject("accounts",accounts);
-        //设置响应的jsp视图
-        modelAndView.setViewName("accounts");
+    @ResponseBody
+    public String getAllAccounts()throws Exception{
 
-        return modelAndView;
+        //调用service方法得到用户列表
+        ServiceModel model = accountService.get_all_accounts();
+
+        return JacksonUtils.toJSon(model);
     }
 
     /**
@@ -61,18 +63,22 @@ public class AccountController {
     public String accountLogin(String accountname, String password,HttpSession session)throws Exception{
 
         System.out.println("accountLogin...");
+        ServiceModel model = new ServiceModel("登录失败,请检查账号和密码",-1,false);
+        if(accountname == null || accountname.trim().equals("") || password == null || password.trim().equals(""))return JacksonUtils.toJSon(model);
 
         //查找匹配的account
-        Account account = accountService.get_account_by_emailOrphoneAndpwd(accountname, password);
+        model = accountService.get_account_by_emailOrphoneAndpwd(accountname, password);
 
-        if(null == account){
+        if(-1 == model.getCode()){
             //异步返回信息
-            return "loginError";
+            model.setCode(0);
+            model.setMsg("账号或密码错误，请重新登录");
+
+            return JacksonUtils.toJSon(model);
         }
             //将用户添加到session中
-        session.setAttribute("account", account);
-
-        return "loginSuccess";
+        session.setAttribute("account", model.getData());
+        return JacksonUtils.toJSon(model);
     }
 
     /**
@@ -80,41 +86,45 @@ public class AccountController {
      * @param accountname
      * @param password
      * @param birthday
-     * @param sex
+     * @param gender
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/Hoole_account_register", method = RequestMethod.POST)
     @ResponseBody
-    public String accountRegister(String accountname, String password, String birthday, String sex)throws Exception{
+    public String accountRegister(String accountname, String password, Date birthday, String gender)throws Exception{
         System.out.println("accountRegister...");
+        ServiceModel model = new ServiceModel("注册失败，请重新注册",-1,false);
+        if(accountname.trim().equals("")||accountname == null || password == null || password.trim().equals("")||birthday == null)return JacksonUtils.toJSon(model);
+        System.out.println(birthday);
         Account account = new Account();
         account.setPassword(password);
         //邮箱
         if(accountname.matches("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?")){
             account.setEmail(accountname);
-            if(null != accountService.get_account_by_email(accountname)){
-                return "errorEmail";
+            account.setBindEmail(accountname);
+            if(accountService.get_account_by_email(accountname).isSuccess()){
+                model.setMsg("邮箱已经注册");
+                model.setCode(0);
+                return JacksonUtils.toJSon(model);
             }
         }else{
         //手机号
             account.setPhone(accountname);
-            if(null != accountService.get_account_by_phone(accountname)){
-                return "errorPhone";
+            account.setBindPhone(accountname);
+            if(accountService.get_account_by_phone(accountname).isSuccess()){
+                model.setCode(0);
+                model.setMsg("该手机已经注册");
+                return JacksonUtils.toJSon(model);
             }
         }
 
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        Date date = format.parse(birthday + " 00:00:00");
-        account.setBirthday(date);
-        int day = Integer.valueOf(birthday.substring(4,5));
-        int month = Integer.valueOf(birthday.substring(1, 2));
-        account.setConstellation(Constellation.getConstellation(month, day));
-        account.setSex(sex);
-        accountService.add_account(account);
-        //设置响应的jsp视图
+        account.setBirthday(birthday);
+        account.setConstellation(Constellation.getConstellation(birthday));
+        account.setGender(gender);
+        model = accountService.add_account(account);
 
-        return "registerSuccess";
+        return JacksonUtils.toJSon(model);
     }
 
     /**
@@ -127,6 +137,20 @@ public class AccountController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("Account/Hoole_profile");
+        return modelAndView;
+
+    }
+
+    /**
+     * 账户设置
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/Hoole_account_setting")
+    public ModelAndView accountSetting()throws Exception {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("Account/Hoole_account_setting");
         return modelAndView;
 
     }
@@ -145,16 +169,17 @@ public class AccountController {
         Account currentAccount = (Account) session.getAttribute("account");
         account.setId(currentAccount.getId());
 
-        account.setConstellation(Constellation.getConstellation(account.getBirthday().getMonth() + 1, account.getBirthday().getDate()));
+        account.setConstellation(Constellation.getConstellation(account.getBirthday()));
         accountService.modify_account(account);
 
-        account = accountService.get_account_by_id(account.getId());
+        ServiceModel model = accountService.get_account_by_id(account.getId());
 
-        session.setAttribute("account", account);
-        modelAndView.addObject("account", account);
+        session.setAttribute("account", model.getData());
+        modelAndView.addObject("account", model.getData());
 
 
         modelAndView.setViewName("Account/Hoole_profile");
+
         return modelAndView;
     }
 
@@ -189,14 +214,14 @@ public class AccountController {
         int finaltime = (int) System.currentTimeMillis();
         System.out.println(finaltime - pre);
 
-        portraitPath = "/AccountFile" + portraitPath;
+        portraitPath = "AccountFile" + portraitPath;
         System.out.println(portraitPath);
 
         currentAccount.setPortrait(portraitPath);
 
         accountService.modify_account(currentAccount);
 
-        currentAccount = accountService.get_account_by_id(currentAccount.getId());
+        currentAccount = (Account) accountService.get_account_by_id(currentAccount.getId()).getData();
 
         session.setAttribute("account", currentAccount);
 
@@ -256,4 +281,11 @@ public class AccountController {
         return "Hoole_loginUI";
     }
 
+    /**
+     * 测试
+     */
+    @RequestMapping("/Hoole_accounts")
+    public String goToAccounts(){
+        return "accounts";
+    }
 }

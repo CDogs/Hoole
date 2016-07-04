@@ -1,53 +1,63 @@
 package com.CDogs.Hoole.pojo;
 
+import com.CDogs.Hoole.Util.JsonDateFormat;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import java.util.Date;
 
 public class Account {
-    private Integer id;
+    private Long id;
 
     private String email;
 
     private String phone;
 
-    private String state;
+    private String nickname;
 
+    @JsonSerialize(using = JsonDateFormat.class)
     private Date createTime;
 
+    @JsonSerialize(using = JsonDateFormat.class)
     private Date lastLoginTime;
+
+    private String gender;
+
+    private String state;
 
     private String school;
 
+    private String bindEmail;
+
+    private String bindPhone;
+
+    private String accountNum;
+
+    private String password;
+
+    private String portrait;
+
     private String address;
 
-    private String sex;
-
+    @JsonSerialize(using = JsonDateFormat.class)
     private Date birthday;
 
-    private String constellation;
-
-    private String signature;
-
-    private String company;
+    private String postcode;
 
     private Integer grade;
 
     private Integer integration;
 
-    private String postcode;
+    private String company;
 
-    private String nickname;
+    private String signature;
 
-    private String portrait;
+    private String constellation;
 
-    private String password;
-
-    private String accountNum;
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -67,12 +77,12 @@ public class Account {
         this.phone = phone == null ? null : phone.trim();
     }
 
-    public String getState() {
-        return state;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setState(String state) {
-        this.state = state == null ? null : state.trim();
+    public void setNickname(String nickname) {
+        this.nickname = nickname == null ? null : nickname.trim();
     }
 
     public Date getCreateTime() {
@@ -91,12 +101,68 @@ public class Account {
         this.lastLoginTime = lastLoginTime;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender == null ? null : gender.trim();
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state == null ? null : state.trim();
+    }
+
     public String getSchool() {
         return school;
     }
 
     public void setSchool(String school) {
         this.school = school == null ? null : school.trim();
+    }
+
+    public String getBindEmail() {
+        return bindEmail;
+    }
+
+    public void setBindEmail(String bindEmail) {
+        this.bindEmail = bindEmail == null ? null : bindEmail.trim();
+    }
+
+    public String getBindPhone() {
+        return bindPhone;
+    }
+
+    public void setBindPhone(String bindPhone) {
+        this.bindPhone = bindPhone == null ? null : bindPhone.trim();
+    }
+
+    public String getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum == null ? null : accountNum.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
+    public String getPortrait() {
+        return portrait;
+    }
+
+    public void setPortrait(String portrait) {
+        this.portrait = portrait == null ? null : portrait.trim();
     }
 
     public String getAddress() {
@@ -107,14 +173,6 @@ public class Account {
         this.address = address == null ? null : address.trim();
     }
 
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
-    }
-
     public Date getBirthday() {
         return birthday;
     }
@@ -123,28 +181,12 @@ public class Account {
         this.birthday = birthday;
     }
 
-    public String getConstellation() {
-        return constellation;
+    public String getPostcode() {
+        return postcode;
     }
 
-    public void setConstellation(String constellation) {
-        this.constellation = constellation == null ? null : constellation.trim();
-    }
-
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature == null ? null : signature.trim();
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company == null ? null : company.trim();
+    public void setPostcode(String postcode) {
+        this.postcode = postcode == null ? null : postcode.trim();
     }
 
     public Integer getGrade() {
@@ -163,43 +205,35 @@ public class Account {
         this.integration = integration;
     }
 
-    public String getPostcode() {
-        return postcode;
+    public String getCompany() {
+        return company;
     }
 
-    public void setPostcode(String postcode) {
-        this.postcode = postcode == null ? null : postcode.trim();
+    public void setCompany(String company) {
+        this.company = company == null ? null : company.trim();
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getSignature() {
+        return signature;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname == null ? null : nickname.trim();
+    public void setSignature(String signature) {
+        this.signature = signature == null ? null : signature.trim();
     }
 
-    public String getPortrait() {
-        return portrait;
+    public String getConstellation() {
+        return constellation;
     }
 
-    public void setPortrait(String portrait) {
-        this.portrait = portrait == null ? null : portrait.trim();
+    public void setConstellation(String constellation) {
+        this.constellation = constellation == null ? null : constellation.trim();
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public String getAccountNum() {
-        return accountNum;
-    }
-
-    public void setAccountNum(String accountNum) {
-        this.accountNum = accountNum == null ? null : accountNum.trim();
+    public String toString(){
+        return "account [id=" + id + ", email=" + email + ", phone" + phone + ", nickname" + nickname + ", createTime" + createTime
+                + ", lastLoginTime" + lastLoginTime + ", gender" + gender + ", state" + state + ", school" + school + ", bindEmail"
+                + bindEmail + ", bindPhone" + bindPhone + ", accountNum" + accountNum + ", portrait" + portrait + ", address" + address
+                + ", birthday" + birthday + ", postcode" + postcode + ", grade" + grade + ", integration" + integration
+                + ", company" + company + ", signature" + signature + ", constellation" + constellation + "]";
     }
 }

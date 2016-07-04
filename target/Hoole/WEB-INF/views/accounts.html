@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="customersCtrl">
+
+    <ul>
+        <li ng-repeat="x in accounts">
+            {{ x.id + ', ' + x.nickname + ',' + x.createTime + ", " + x.accountNum + ", " + x.birthday + ", " + x.signature + ", " + x.constellation}}
+        </li>
+    </ul>
+
+</div>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('customersCtrl', function($scope, $http) {
+        $http.get("account/get_all_accounts")
+                .success(function (response) {
+                    $scope.accounts = response.data;
+                    console.log(response);
+                    //alert(response);
+                });
+    });
+</script>
+
+</body>
+</html>

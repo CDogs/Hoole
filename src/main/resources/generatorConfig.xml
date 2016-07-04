@@ -60,12 +60,17 @@
         </javaClientGenerator>
 
         <!-- 指定数据库表 -->
-        <table tableName="hoole_account_t" domainObjectName="Account">
-            <generatedKey column="person_ID" sqlStatement="Mysql" />
-            <columnRenamingRule searchString="person_" replaceString="" />
+
+<!--        <table tableName="hoole_account" domainObjectName="Account">
+            <generatedKey column="ID" sqlStatement="Mysql" />
+        </table>-->
+
+<!--        <table tableName="hoole_relation_type" domainObjectName="RelationType">
+            <generatedKey column="ID" sqlStatement="Mysql" />
+        </table>-->
+        <table tableName="hoole_relations" domainObjectName="Relations">
+            <generatedKey column="ID" sqlStatement="Mysql" />
         </table>
-
-
         <!-- 有些表的字段需要指定java类型
          <table schema="" tableName="">
             <columnOverride column="" javaType="" />

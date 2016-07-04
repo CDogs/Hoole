@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.CDogs.Hoole.mapper.RelationsMapper" >
+  <resultMap id="BaseResultMap" type="com.CDogs.Hoole.pojo.Relations" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="accountID" property="accountid" jdbcType="BIGINT" />
+    <result column="contactID" property="contactid" jdbcType="BIGINT" />
+    <result column="relation" property="relation" jdbcType="INTEGER" />
+    <result column="intimacy" property="intimacy" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, accountID, contactID, relation, intimacy
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.CDogs.Hoole.pojo.RelationsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hoole_relations
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from hoole_relations
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from hoole_relations
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.CDogs.Hoole.pojo.RelationsExample" >
+    delete from hoole_relations
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.CDogs.Hoole.pojo.Relations" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into hoole_relations (ID, accountID, contactID, 
+      relation, intimacy)
+    values (#{id,jdbcType=BIGINT}, #{accountid,jdbcType=BIGINT}, #{contactid,jdbcType=BIGINT}, 
+      #{relation,jdbcType=INTEGER}, #{intimacy,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.CDogs.Hoole.pojo.Relations" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into hoole_relations
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="accountid != null" >
+        accountID,
+      </if>
+      <if test="contactid != null" >
+        contactID,
+      </if>
+      <if test="relation != null" >
+        relation,
+      </if>
+      <if test="intimacy != null" >
+        intimacy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="accountid != null" >
+        #{accountid,jdbcType=BIGINT},
+      </if>
+      <if test="contactid != null" >
+        #{contactid,jdbcType=BIGINT},
+      </if>
+      <if test="relation != null" >
+        #{relation,jdbcType=INTEGER},
+      </if>
+      <if test="intimacy != null" >
+        #{intimacy,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.CDogs.Hoole.pojo.RelationsExample" resultType="java.lang.Integer" >
+    select count(*) from hoole_relations
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hoole_relations
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.accountid != null" >
+        accountID = #{record.accountid,jdbcType=BIGINT},
+      </if>
+      <if test="record.contactid != null" >
+        contactID = #{record.contactid,jdbcType=BIGINT},
+      </if>
+      <if test="record.relation != null" >
+        relation = #{record.relation,jdbcType=INTEGER},
+      </if>
+      <if test="record.intimacy != null" >
+        intimacy = #{record.intimacy,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hoole_relations
+    set ID = #{record.id,jdbcType=BIGINT},
+      accountID = #{record.accountid,jdbcType=BIGINT},
+      contactID = #{record.contactid,jdbcType=BIGINT},
+      relation = #{record.relation,jdbcType=INTEGER},
+      intimacy = #{record.intimacy,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.CDogs.Hoole.pojo.Relations" >
+    update hoole_relations
+    <set >
+      <if test="accountid != null" >
+        accountID = #{accountid,jdbcType=BIGINT},
+      </if>
+      <if test="contactid != null" >
+        contactID = #{contactid,jdbcType=BIGINT},
+      </if>
+      <if test="relation != null" >
+        relation = #{relation,jdbcType=INTEGER},
+      </if>
+      <if test="intimacy != null" >
+        intimacy = #{intimacy,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.CDogs.Hoole.pojo.Relations" >
+    update hoole_relations
+    set accountID = #{accountid,jdbcType=BIGINT},
+      contactID = #{contactid,jdbcType=BIGINT},
+      relation = #{relation,jdbcType=INTEGER},
+      intimacy = #{intimacy,jdbcType=DOUBLE}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

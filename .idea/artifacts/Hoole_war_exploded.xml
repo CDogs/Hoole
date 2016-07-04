@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="Hoole:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/Hoole_war_exploded</output-path>
+    <output-path>$PROJECT_DIR$/target/Hoole</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -24,6 +24,7 @@
           <element id="library" level="project" name="Maven: com.mchange:c3p0:0.9.1.2" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.2.6" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.2.2" />
+          <element id="library" level="project" name="Maven: javax:javaee-api:7.0" />
           <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.5.0" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.30" />
           <element id="library" level="project" name="Maven: commons-dbcp:commons-dbcp:1.2.2" />
@@ -42,7 +43,11 @@
           <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.8.6" />
           <element id="library" level="project" name="Maven: javax.mail:mail:1.4.7" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
+          <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.22" />
         </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/Hoole/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="Hoole/web/Web" />
     </root>
